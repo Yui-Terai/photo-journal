@@ -47,7 +47,6 @@ const storage = multer.diskStorage({
        cb(null, 'public/uploads')
    },
    filename: function (req, file, cb) {
-    console.log(file)
        cb(null, file.originalname)
    }
 });
@@ -63,13 +62,50 @@ const upload = multer({ storage: storage });
 
 //Send request to display home screen
 let homeRequest = (request, response) => {
-     response.render('base/home');
+  response.render('base/home');
+}
+
+//Send a request to create forms for adding a new photo
+let newPhotoRequest = (request, response) => {
+  response.render('photo/newphoto');
+}
+
+//Take the input for a new photo and save it into photos table
+let addNewPhoto = (request, response) => {
+  let newPhoto = '/uploads/' + request.file.originalname;
+  let query = 'INSERT INTO photos (photo, title, location, taken_date, capture) VALUES ($1, $2, $3, $4, $5)';
+  const values = [newPhoto, request.body.title, request.body.location, request.body.taken_date, request.body.capture];
+  pool.query(query, values, (err, result) => {
+    if(!err) {
+       response.redirect('/photos');
+
+    } else {
+      console.error('query error:', err.stack);
+      response.status(500).send("Internal Server Error");
+    }
+  });
 }
 
 
-
+//Send request to show all indivisual photos
+let showPhotos = (request, response) => {
+  query = 'SELECT * FROM photos';
+  pool.query(query, (err, result) => {
+    if (!err) {
+        const data = {photos: result.rows};
+        console.log(data);
+        response.render('photo/showphotos', data);
+      } else {
+        console.error('query error:', err);
+        response.status(500).send('LINE 203 query error', 'Internal Server Error');
+      }
+  });
+}
 
 app.get('/', homeRequest);
+app.get('/photos/new', newPhotoRequest);
+app.post('/photos', upload.single('photo'), addNewPhoto);
+app.get('/photos', showPhotos);
 
 
 
