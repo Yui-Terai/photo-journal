@@ -65,10 +65,12 @@ let homeRequest = (request, response) => {
   response.render('base/home');
 }
 
-//Send a request to create forms for adding a new photo
+
+//Send a request to create a form for adding a new photo
 let newPhotoRequest = (request, response) => {
   response.render('photo/newphoto');
 }
+
 
 //Take the input for a new photo and save it into photos table
 let addNewPhoto = (request, response) => {
@@ -81,11 +83,10 @@ let addNewPhoto = (request, response) => {
 
     } else {
       console.error('query error:', err.stack);
-      response.status(500).send("Internal Server Error");
+      response.status(500).send('LINE 86 query error');
     }
   });
 }
-
 
 //Send request to show all indivisual photos
 let showPhotos = (request, response) => {
@@ -93,19 +94,83 @@ let showPhotos = (request, response) => {
   pool.query(query, (err, result) => {
     if (!err) {
         const data = {photos: result.rows};
-        console.log(data);
         response.render('photo/showphotos', data);
       } else {
         console.error('query error:', err);
-        response.status(500).send('LINE 203 query error', 'Internal Server Error');
+        response.status(500).send('LINE 101 query error');
       }
   });
 }
 
+//Send request to create a form for a new album
+let newAlbumRequest = (request, response) => {
+  let query = 'SELECT * FROM photos';
+  pool.query(query, (err, result) => {
+    if (!err) {
+      const data = {photos: result.rows};
+      response.render('album/newalbum', data);
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('LINE 116 query error');
+    }
+  });
+}
+
+//Take the input for a new album and save in into album table
+let newAlbum = (request, response) => {
+  let photos = request.body.photoArray;
+  let albumQuery = "INSERT INTO album (title) VALUES ($1) RETURNING id";
+  let values = [request.body.title];
+  pool.query(albumQuery, values, (err, result) => {
+    if(!err) {
+      let albumId = result.rows[0].id;
+      let photosAlbumQuery = 'INSERT INTO photos_album (photo_id, album_id) VALUES';
+            photos.forEach(photoId => {
+                photosAlbumQuery += `(${photoId}, ${albumId}),`;
+            });
+           photosAlbumQuery = photosAlbumQuery.slice(0,-1);
+           photosAlbumQuery = photosAlbumQuery + ` RETURNING *`;
+
+            pool.query(photosAlbumQuery, (err, result) => {
+              if(!err) {
+                response.redirect('/album');
+              } else {
+                console.error('query error:', err.stack);
+                response.status(500).send('LINE 140 query error');
+              }
+            });
+    } else {
+      console.error('query error:', err.stack);
+      response.status(500).send('LINE 145 query error');
+    }
+  });
+}
+
+//Send a request to show all albums
+let showAlbum = (request, response) => {
+  query = 'SELECT * FROM album';
+  pool.query(query, (err, result) => {
+    if (!err) {
+        const data = {album: result.rows};
+        console.log(data);
+        response.render('album/showalbum', data);
+      } else {
+        console.error('query error:', err);
+        response.status(500).send('LINE 159 query error');
+      }
+  });
+}
+
+
+
+//All the path
 app.get('/', homeRequest);
 app.get('/photos/new', newPhotoRequest);
 app.post('/photos', upload.single('photo'), addNewPhoto);
 app.get('/photos', showPhotos);
+app.get('/album/new', newAlbumRequest);
+app.post('/album', newAlbum);
+app.get('/album', showAlbum);
 
 
 

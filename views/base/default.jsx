@@ -12,9 +12,9 @@ class Default extends React.Component {
           <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie|Sacramento|Special+Elite" rel="stylesheet"></link>
         </head>
         <body>
-          <nav class="nav">
-            <a class="nav-link" href="#">photos</a>
-            <a class="nav-link" href="#">album</a>
+          <nav className="nav">
+            <a className="nav-link" href="/photos">photos</a>
+            <a className="nav-link" href="/album">album</a>
           </nav>
           {this.props.children}
         </body>

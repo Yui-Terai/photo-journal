@@ -7,7 +7,7 @@ class ShowPhotos extends React.Component {
             return (
                 <div>
                     <img src={photo.photo}/>
-                    <p>{this.props.title} &nbsp; {photo.taken_date}</p>
+                    <p>{photo.title} &nbsp; {photo.taken_date}</p>
                 </div>
                 )
             });

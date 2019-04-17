@@ -12,17 +12,17 @@ class Home extends React.Component {
         <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie|Sacramento|Special+Elite" rel="stylesheet"></link>
       </head>
 
-      <body className="home-body">
-        <nav class="nav">
-          <a class="nav-link text-white" href="#">photos</a>
-          <a class="nav-link text-white" href="#">album</a>
+      <body className="home-body d-flex align-items-center">
+        <nav className="nav fixed-top">
+          <a className="nav-link text-white" href="/photos">photos</a>
+          <a className="nav-link text-white" href="/album">album</a>
         </nav>
-        <div class="container" role="main">
-            <div class="center-block text-center">
-              <h1>PHOTO JOURNAL</h1>
-              <button type="button" class="btn btn-primary   btn-lg btn-outline-light">add photo</button>
-              <button type="button" class="btn btn-secondary btn-lg btn-outline-light">create album</button>
-            </div>
+        <div className="home-container container">
+            <h1 className="home-title">PHOTO JOURNAL</h1>
+            <a href="/photos/new" class="btn btn-primary btn-lg active btn-outline-dark" role="button" aria-pressed="true">
+            add photo</a>
+            <a href="/album/new" class="btn btn-primary btn-lg active btn-outline-dark" role="button" aria-pressed="true">
+            create album</a>
         </div>
       </body>
     </html>
@@ -31,4 +31,3 @@ class Home extends React.Component {
 }
 
 module.exports = Home;
-

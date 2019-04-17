@@ -5,7 +5,7 @@ class Newphoto extends React.Component {
     render() {
         return (
             <Default title="add photo">
-                <div className="container">
+                <div className="newphoto-container">
                     <h1>add your photo</h1>
                     <form action="/photos" method="post" enctype="multipart/form-data">
                     photo: <input type="file" name="photo"/>
