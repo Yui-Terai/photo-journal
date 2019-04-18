@@ -17,7 +17,7 @@ class Home extends React.Component {
           <a className="nav-link text-white" href="/photos">photos</a>
           <a className="nav-link text-white" href="/album">album</a>
         </nav>
-        <div className="home-container container">
+        <div className="container text-center">
             <h1 className="home-title">PHOTO JOURNAL</h1>
             <a href="/photos/new" class="btn btn-primary btn-lg active btn-outline-dark" role="button" aria-pressed="true">
             add photo</a>

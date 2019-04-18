@@ -20,14 +20,11 @@ img {
 
 .nav-link {
 	color: #333333;
+	font-size: 25px;
 }
 
 .fixed-top {
 	top: 0;
-}
-
-.home-container {
-	width: 28%;
 }
 
 .home-title {
@@ -94,8 +91,8 @@ ul {
   }
   
   label img {
-	height: 100px;
-	width: 100px;
+	height: 250px;
+	width: 250px;
 	transition-duration: 0.2s;
 	transform-origin: 50% 50%;
   }

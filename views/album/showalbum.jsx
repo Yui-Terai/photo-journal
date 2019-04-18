@@ -5,7 +5,7 @@ class ShowAlbum extends React.Component {
     render() {
         const albums = this.props.album.map(album => {
             return (
-            <h1>{album.title}</h1>
+            <a href={`/album/${album.id}`}><h1>{album.title}</h1></a>
             )
         });
         return (

@@ -117,7 +117,7 @@ let newAlbumRequest = (request, response) => {
 }
 
 //Take the input for a new album and save in into album table
-let newAlbum = (request, response) => {
+let createNewAlbum = (request, response) => {
   let photos = request.body.photoArray;
   let albumQuery = "INSERT INTO album (title) VALUES ($1) RETURNING id";
   let values = [request.body.title];
@@ -152,58 +152,96 @@ let showAlbum = (request, response) => {
   pool.query(query, (err, result) => {
     if (!err) {
         const data = {album: result.rows};
-        console.log(data);
         response.render('album/showalbum', data);
       } else {
         console.error('query error:', err);
-        response.status(500).send('LINE 159 query error');
+        response.status(500).send('LINE 158 query error');
       }
   });
 }
 
+//Send a request to show all the photos in the selected album
+let photosInAlbumRequest = (request, response) => {
+  let albumId = request.params.id;
+  let query = `SELECT photos.photo, photos.title, photos.taken_date FROM photos INNER JOIN photos_album ON (photos.id = photos_album.photo_id) WHERE photos_album.album_id=${albumId}`;
+  pool.query(query, (err, result) => {
+    if (!err) {
+      console.log(result.rows);
+      const data = {photosInAlbum: result.rows};
+      response.render('album/showAllPhotos', data);
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('LINE 174 query error');
+    }
+  });
+}
+
+//Send a request to edit the selected photo
+let editPhotoRequest = (request, response) => {
+  let query = `SELECT * FROM photos WHERE id=${request.params.id}`;
+  pool.query(query, (err, result) => {
+    if(!err) {
+      const data = {editPhoto: result.rows[0]};
+      console.log(result.rows);
+      response.render('photo/edit', data);
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('LINE 188 query error');
+    }
+  });
+}
+
+//Take the input and update photos table
+let editPhotoPut = (request, response) => {
+  const photoId = request.params.id;
+  let title = request.body.title;
+  let location = request.body.location;
+  let taken_date = request.body.taken_date;
+  let capture = request.body.capture;
+
+  let query = `UPDATE photos SET title='${title}', location='${location}', taken_date='${taken_date}', capture='${capture}' WHERE id=${photoId}`;
+  
+  pool.query(query, (err, result) => {
+    if(!err) {  
+      response.redirect('/photos');
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('LINE 203 query error');
+    }
+  });
+}
 
 
-//All the path
-app.get('/', homeRequest);
-app.get('/photos/new', newPhotoRequest);
-app.post('/photos', upload.single('photo'), addNewPhoto);
-app.get('/photos', showPhotos);
-app.get('/album/new', newAlbumRequest);
-app.post('/album', newAlbum);
-app.get('/album', showAlbum);
+//Send a request to show the selcted photo to delete
+let deletePhotoRequest = (request, response) => {
+  let photoId = request.params.id;
+  let query = `SELECT * FROM photos WHERE id=${photoId}`;
+
+  pool.query(query, (err, result) => {
+    if(!err) {
+      const data = {deletePhoto: result.rows[0]};
+      response.render('photo/delete', data)
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('QUERY ERROR!!!!! at deletePhotoRequest');
+    }
+  });
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Delete the selected photo
+let deletePhoto = (request, response) => {
+  let deletePhotoId = request.params.id;
+  let query =  `DELETE FROM photos WHERE id=${deletePhotoId}`;
+  pool.query(query, (err, result) => {
+    if(!err) {
+      response.redirect('/photos');
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('QUERY ERROR!!!!! at deletePhoto');
+    }
+  });
+}
 
 
 
@@ -220,9 +258,70 @@ app.get('/album', showAlbum);
 
 /**
  * ===================================
+ * DONE DONE DONE DONE DONE DONE DONE
+ * ===================================
+ */
+
+
+//Send a request to show the selected photo journal
+let showJournal = (request, response) => {
+  let query = `SELECT * FROM photos WHERE id=${request.params.id}`;
+  pool.query(query, (err, result) => {
+    if(!err) {
+      const data = {journal: result.rows[0]};
+      response.render('photo/journal', data);
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('LINE 226 query error');
+    }
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * ===================================
+ * ALL THE PATH
+ * ===================================
+ */
+
+app.get('/', homeRequest);
+
+app.get('/photos/new', newPhotoRequest);
+app.post('/photos', upload.single('photo'), addNewPhoto);
+app.get('/photos', showPhotos);
+app.get('/photos/:id/edit', editPhotoRequest);
+app.put('/photos/:id', editPhotoPut);
+app.get('/photos/:id/delete', deletePhotoRequest);
+app.delete('/photos/:id', deletePhoto);
+
+app.get('/photos/:id', showJournal);
+
+
+app.get('/album/new', newAlbumRequest);
+app.post('/album', createNewAlbum);
+app.get('/album', showAlbum);
+app.get('/album/:id', photosInAlbumRequest);
+
+
+
+
+
+/**
+ * ===================================
  * Listen to requests on port 3000
  * ===================================
  */
+
 const server = app.listen(3000, () => console.log('~~~ Tuning in to the waves of port 3000 ~~~'));
 
 let onClose = function(){
