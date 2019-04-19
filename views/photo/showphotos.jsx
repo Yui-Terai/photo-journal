@@ -5,19 +5,25 @@ class ShowPhotos extends React.Component {
     render() {
         const photos = this.props.photos.map(photo => {
             return (
-                <div>
-                    <a href={`/photos/${photo.id}`}>
-                    <img src={photo.photo}/>
-                    <p>{photo.title} &nbsp; {photo.taken_date}</p>
-                    <a href={`/photos/${photo.id}/edit`} class="btn btn-primary btn-sm active" role="button" aria-pressed="true">edit</a>
-                    <a href={`/photos/${photo.id}/delete`} class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">delete</a>
-                    </a>
+                <div className="col showphoto-col">
+                    <div className="polaroid">
+                        <a href={`/photos/${photo.id}`}>
+                        <p>{photo.title}&nbsp;{photo.taken_date}</p>
+                        <img src={photo.photo}/>
+                        </a>
+                    </div>
+                    <a href={`/photos/${photo.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-secondary edit-delete-button" role="button" aria-pressed="true">edit</a>
+                    <a href={`/photos/${photo.id}/delete`} className="btn btn-primary btn-sm active btn btn-secondary edit-delete-button" role="button" aria-pressed="true">delete</a>
                 </div>
                 )
             });
         return (
             <Default title="photos">
-              {photos}
+            <div className="container">
+                <div className="row align-items-center">
+                {photos}
+                </div>
+            </div>
             </Default>
         );
     }
@@ -25,3 +31,5 @@ class ShowPhotos extends React.Component {
 }
 
 module.exports = ShowPhotos;
+
+

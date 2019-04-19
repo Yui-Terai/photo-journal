@@ -4,7 +4,11 @@ img {
 }
 
 
-/* Home screen CSS */
+/* =====================
+
+Home screen
+
+========================*/
 .home-body {
 	background-image: url('/joanna-kosinska-290213-unsplash.jpg');
 	background-size: cover;
@@ -14,12 +18,13 @@ img {
 	height: 100vh;
 } 
 
-.nav {
+.nav-default {
+	background-color: #453b33;
 	font-family: 'Special Elite', cursive;
 }
 
 .nav-link {
-	color: #333333;
+	color: #FEFDFB;
 	font-size: 25px;
 }
 
@@ -30,17 +35,86 @@ img {
 .home-title {
 	color: #CCC3B6;
 }
-/* Home screen CSS */
 
 
-/* Add new photo section */
-.newphoto-container {
+
+/* =====================
+
+Add new photo section
+
+========================*/
+.newphoto-h1 {
 	font-family: 'Special Elite', cursive;
+	text-align: center;
+	margin: 96px;
 }
-/* Add new photo section */
+
+.newphoto-form {
+	color: #777;
+	background: #f6f6f3;
+	box-shadow: 0px 3px 15px hsla(0,0%,0%,.08);
+	margin: 40px auto;
+	position: relative;
+	width: 752px;
+	height: 282px;
+	border: 1px solid #dfdfd3;
+	background-image: -webkit-radial-gradient(#d6d5d6 30%, transparent 20%),
+										-webkit-radial-gradient(#cfcfc3 38%, transparent 24%),
+										-webkit-linear-gradient(top, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 95%,
+																									hsla(180,75%,50%,.1) 95%, hsla(180,75%,50%,.1) 100%);
+	background-image: -moz-radial-gradient(#d6d5d6 30%, transparent 20%),
+										-moz-radial-gradient(#cfcfc3 38%, transparent 24%),
+										-moz-linear-gradient(top, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 95%,
+																									hsla(180,75%,50%,.1) 95%, hsla(180,75%,50%,.1) 100%);
+	background-image: radial-gradient(#d6d5d6 30%, transparent 20%),
+										radial-gradient(#cfcfc3 38%, transparent 24%),
+										linear-gradient(top, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 95%,
+																									hsla(180,75%,50%,.1) 95%, hsla(180,75%,50%,.1) 100%);
+	background-position: 4px 1px, 4px 0px, 50% 0px;
+	background-repeat: repeat-y,  repeat-y, repeat;
+	background-size: 30px 30px, 30px 30px, 30px 30px;
+	padding: 36px 48px 23px 80px;
+}
+
+.newphoto-form:after {
+	border-left: 2px solid hsla(0,95%,50%,.1);
+	border-right: 2px solid hsla(0,95%,50%,.1);
+	bottom: 0;
+	content: '';
+	left: 60px;
+	position: absolute;
+	top: 0;
+	width: 3px;
+}
+
+.newphoto-form td {
+	font-family: 'Special Elite', cursive;
+	line-height: 30px;
+	margin-bottom: 30px;
+}
+
+.newphoto-input {
+	background: transparent;
+	border: 0px;
+	outline: 0;
+	width: 200px;
+	font-family: 'Special Elite', cursive;
+	resize: none;
+}
+
+.newphoto-submit-div {
+	font-family: 'Special Elite', cursive;
+	text-align: center;
+	margin: 76px;
+}
 
 
-/* Add new album section */
+
+/* =====================
+
+Add new album section
+
+========================*/
 .newalbum-container {
 	font-family: 'Special Elite', cursive;
 }
@@ -112,5 +186,42 @@ ul {
 	box-shadow: 0 0 5px #333;
 	z-index: -1;
   }
-/* Add new album section */
-  
+
+
+
+/* =============================
+
+Show indivisual photos section
+
+================================*/
+.polaroid {
+  position: relative;
+  width: 220px;
+}
+ 
+.polaroid img {
+	width: 300px;
+	height: 300px;
+  border: 10px solid #fff;
+  border-bottom: 45px solid #fff;
+  -webkit-box-shadow: 3px 3px 3px #777;
+     -moz-box-shadow: 3px 3px 3px #777;
+          box-shadow: 3px 3px 3px #777;
+}
+ 
+.polaroid p {
+  position: absolute;
+	text-align: center;
+  width: 100%;
+  bottom: 0px;
+	font-family: 'Homemade Apple', cursive;
+	color: black;
+}
+
+.showphoto-col {
+	margin: 18px;
+}
+
+.edit-delete-button {
+	font-family: 'Special Elite', cursive;
+}
