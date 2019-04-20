@@ -16,20 +16,21 @@ class NewAlbum extends React.Component {
             });
             return (
             <Default title="create album">
-            <div className="newalbum-container">
-                <h1>create a new album</h1>
-                <form action="/album" method="post">
-                title: <input type="text" name="title"/>
-                <br/>
-                <h2>select photos</h2>
-                <div>
-                    <ul>
-                    {photos}
-                    </ul>
-                </div>
-                <input type="submit" value="create"></input>
-                </form>
-            </div>
+              <h1 className="newalbum-title text-center mt-5">create a new album</h1>
+              <form action="/album" method="post">
+              <p className="albumtitle-form mt-4 mb-3">
+                title: <input className="newalbum-input" type="text" name="title"/>
+              </p>
+              <p className="newalbum-h4 mb-0">select photos:</p>
+              <div className="selectphoto-container text-center">
+                <ul>
+                {photos}
+                </ul>
+              </div>
+              <div className="createalbum-button text-center">
+                <input className="newalbum-button btn btn-primary btn btn-outline-dark text-center" type="submit" value="create"></input>
+              </div>
+              </form>
             </Default>
         );
     }

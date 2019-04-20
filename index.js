@@ -83,7 +83,7 @@ let addNewPhoto = (request, response) => {
 
     } else {
       console.error('query error:', err.stack);
-      response.status(500).send('LINE 86 query error');
+      response.status(500).send('QUERY ERROR!!!!! at addNewPhoto');
     }
   });
 }
@@ -97,7 +97,7 @@ let showPhotos = (request, response) => {
         response.render('photo/showphotos', data);
       } else {
         console.error('query error:', err);
-        response.status(500).send('LINE 101 query error');
+        response.status(500).send('QUERY ERROR!!!!! at showPhotos');
       }
   });
 }
@@ -111,7 +111,7 @@ let newAlbumRequest = (request, response) => {
       response.render('album/newalbum', data);
     } else {
       console.error('query error:', err);
-      response.status(500).send('LINE 116 query error');
+      response.status(500).send('QUERY ERROR!!!!! at newAlbumRequest');
     }
   });
 }
@@ -136,12 +136,12 @@ let createNewAlbum = (request, response) => {
                 response.redirect('/album');
               } else {
                 console.error('query error:', err.stack);
-                response.status(500).send('LINE 140 query error');
+                response.status(500).send('QUERY ERROR!!!!! at createAlbum');
               }
             });
     } else {
       console.error('query error:', err.stack);
-      response.status(500).send('LINE 145 query error');
+      response.status(500).send('QUERY ERROR!!!!! at createAlbum');
     }
   });
 }
@@ -155,7 +155,7 @@ let showAlbum = (request, response) => {
         response.render('album/showalbum', data);
       } else {
         console.error('query error:', err);
-        response.status(500).send('LINE 158 query error');
+        response.status(500).send('QUERY ERROR!!!!! at showAlbum');
       }
   });
 }
@@ -166,12 +166,11 @@ let photosInAlbumRequest = (request, response) => {
   let query = `SELECT photos.photo, photos.title, photos.taken_date FROM photos INNER JOIN photos_album ON (photos.id = photos_album.photo_id) WHERE photos_album.album_id=${albumId}`;
   pool.query(query, (err, result) => {
     if (!err) {
-      console.log(result.rows);
       const data = {photosInAlbum: result.rows};
       response.render('album/showAllPhotos', data);
     } else {
       console.error('query error:', err);
-      response.status(500).send('LINE 174 query error');
+      response.status(500).send('QUERY ERROR!!!!! at photosInAlbumRequest');
     }
   });
 }
@@ -182,11 +181,10 @@ let editPhotoRequest = (request, response) => {
   pool.query(query, (err, result) => {
     if(!err) {
       const data = {editPhoto: result.rows[0]};
-      console.log(result.rows);
       response.render('photo/edit', data);
     } else {
       console.error('query error:', err);
-      response.status(500).send('LINE 188 query error');
+      response.status(500).send('QUERY ERROR!!!!! at editPhotoRequest');
     }
   });
 }
@@ -206,7 +204,7 @@ let editPhotoPut = (request, response) => {
       response.redirect('/photos');
     } else {
       console.error('query error:', err);
-      response.status(500).send('LINE 203 query error');
+      response.status(500).send('QUERY ERROR!!!!! at editPhotoPut');
     }
   });
 }
@@ -272,7 +270,7 @@ let showJournal = (request, response) => {
       response.render('photo/journal', data);
     } else {
       console.error('query error:', err);
-      response.status(500).send('LINE 226 query error');
+      response.status(500).send('QUERY ERROR!!!!! at showJournal');
     }
   });
 }
