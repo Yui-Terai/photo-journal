@@ -12,8 +12,8 @@ class ShowPhotos extends React.Component {
                         <img src={photo.photo}/>
                         </a>
                     </div>
-                    <a href={`/photos/${photo.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-secondary edit-delete-button" role="button" aria-pressed="true">edit</a>
-                    <a href={`/photos/${photo.id}/delete`} className="btn btn-primary btn-sm active btn btn-secondary edit-delete-button" role="button" aria-pressed="true">delete</a>
+                    <a href={`/photos/${photo.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-secondary edit-delete-button mr-1 mt-2" role="button" aria-pressed="true">edit</a>
+                    <a href={`/photos/${photo.id}/delete`} className="btn btn-primary btn-sm active btn btn-secondary edit-delete-button ml-1 mt-2" role="button" aria-pressed="true">delete</a>
                 </div>
                 )
             });

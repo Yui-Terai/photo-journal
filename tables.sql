@@ -18,5 +18,3 @@ CREATE TABLE IF NOT EXISTS photos_album (
     album_id INTEGER
 );
 
-
-DROP TABLE album;
