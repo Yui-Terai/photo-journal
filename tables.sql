@@ -17,3 +17,6 @@ CREATE TABLE IF NOT EXISTS photos_album (
     photo_id INTEGER,
     album_id INTEGER
 );
+
+
+DROP TABLE album;

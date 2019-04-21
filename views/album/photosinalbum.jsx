@@ -1,7 +1,7 @@
 var React = require("react");
 var Default = require("../base/default");
 
-class ShowAllPhotos extends React.Component {
+class photosInAlbum extends React.Component {
     render() {
         const photos = this.props.photosInAlbum.map(photo => {
             return (
@@ -26,4 +26,4 @@ class ShowAllPhotos extends React.Component {
 
 }
 
-module.exports = ShowAllPhotos;
+module.exports = photosInAlbum;

@@ -32,7 +32,7 @@ class Newphoto extends React.Component {
                     </table>
                 </div>
                 <div className="newphoto-submit-div">
-                  <input className="btn btn-primary btn-lg btn-outline-dark" type="submit" value="add"></input>
+                  <input className="btn btn-primary btn-outline-dark" type="submit" value="add"></input>
                 </div>
                 </form>
             </Default>

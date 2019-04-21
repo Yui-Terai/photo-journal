@@ -12,6 +12,8 @@ class ShowAlbum extends React.Component {
                         <a className="album-link" href={`/album/${album.id}`}><h1>{album.title}</h1></a>
                       </div>
                     </div>
+                    <a href={`/album/${album.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-light edit-delete-button mr-1" role="button" aria-pressed="true">edit</a>
+                    <a href={`/album/${album.id}/delete`} className="btn btn-primary btn-sm active btn btn-light edit-delete-button ml-1" role="button" aria-pressed="true">delete</a>
                   </div>
                 </div>
             )

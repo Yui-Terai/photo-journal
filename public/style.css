@@ -37,9 +37,6 @@ Home screen
 	font-weight: bold;
 }
 
-.home-button {
-	color: #665045;
-}
 
 
 
@@ -357,4 +354,45 @@ journal section
 .article p {
 	font-size:1.5em;
 	font-family: 'Dawning of a New Day', cursive;
+}
+
+
+/* =============================
+
+edit/delete photo section
+
+================================*/
+.editphoto-title,.editphoto-form,.editphoto-button {
+	font-family: 'Special Elite', cursive;
+}
+
+.editphoto-input {
+	font-family: 'Special Elite', cursive;
+	color: #E8CCC3;
+}
+
+.editphoto-img img {
+	width: 450px;
+	height: 450px;
+}
+
+.deletephoto-form {
+	max-width: 700px;
+}
+
+.deletephoto-h3-p {
+	font-family: 'Fredericka the Great', cursive;
+	color: #08084a;
+}
+
+.deletephoto-capture {
+	font-family: 'Dawning of a New Day', cursive;
+	font-size: 1.5em;
+	color: #08084a;
+}
+
+.delete-albumtitle {
+	font-family: 'Special Elite', cursive;
+	background: #EADECF;
+	padding: 130px;
 }

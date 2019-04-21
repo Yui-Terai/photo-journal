@@ -167,7 +167,7 @@ let photosInAlbumRequest = (request, response) => {
   pool.query(query, (err, result) => {
     if (!err) {
       const data = {photosInAlbum: result.rows};
-      response.render('album/showAllPhotos', data);
+      response.render('album/photosinalbum', data);
     } else {
       console.error('query error:', err);
       response.status(500).send('QUERY ERROR!!!!! at photosInAlbumRequest');
@@ -181,7 +181,7 @@ let editPhotoRequest = (request, response) => {
   pool.query(query, (err, result) => {
     if(!err) {
       const data = {editPhoto: result.rows[0]};
-      response.render('photo/edit', data);
+      response.render('photo/editphoto', data);
     } else {
       console.error('query error:', err);
       response.status(500).send('QUERY ERROR!!!!! at editPhotoRequest');
@@ -218,14 +218,13 @@ let deletePhotoRequest = (request, response) => {
   pool.query(query, (err, result) => {
     if(!err) {
       const data = {deletePhoto: result.rows[0]};
-      response.render('photo/delete', data)
+      response.render('photo/deletephoto', data)
     } else {
       console.error('query error:', err);
       response.status(500).send('QUERY ERROR!!!!! at deletePhotoRequest');
     }
   });
 }
-
 
 //Delete the selected photo
 let deletePhoto = (request, response) => {
@@ -241,26 +240,6 @@ let deletePhoto = (request, response) => {
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * ===================================
- * DONE DONE DONE DONE DONE DONE DONE
- * ===================================
- */
-
-
 //Send a request to show the selected photo journal
 let showJournal = (request, response) => {
   let query = `SELECT * FROM photos WHERE id=${request.params.id}`;
@@ -274,6 +253,54 @@ let showJournal = (request, response) => {
     }
   });
 }
+
+
+
+/**
+ * ===================================
+ * DONE DONE DONE DONE DONE DONE DONE
+ * ===================================
+ */
+
+
+
+//Send a request to show the selcted album to delete
+let deleteAlbumRequest = (request, response) => {
+  let albumId = request.params.id;
+  let query = `SELECT * FROM album WHERE id=${albumId}`;
+
+  pool.query(query, (err, result) => {
+    if(!err) {
+      const data = {deleteAlbum: result.rows[0]};
+      response.render('album/deletealbum', data)
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('QUERY ERROR!!!!! at deleteAlbumRequest');
+    }
+  });
+}
+
+
+//Delete the selected album
+let deleteAlbum = (request, response) => {
+  let deleteAlbumId = request.params.id;
+  let query =  `DELETE FROM album WHERE id=${deleteAlbumId}`;
+  pool.query(query, (err, result) => {
+    if(!err) {
+      response.redirect('/album');
+    } else {
+      console.error('query error:', err);
+      response.status(500).send('QUERY ERROR!!!!! at deleteAlbum');
+    }
+  });
+}
+
+
+
+
+
+
+
 
 
 
@@ -309,7 +336,8 @@ app.get('/album/new', newAlbumRequest);
 app.post('/album', createNewAlbum);
 app.get('/album', showAlbum);
 app.get('/album/:id', photosInAlbumRequest);
-
+app.get('/album/:id/delete', deleteAlbumRequest);
+app.delete('/album/:id', deleteAlbum);
 
 
 
