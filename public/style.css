@@ -4,6 +4,8 @@ img {
 }
 
 
+
+
 /* =====================
 
 Home screen
@@ -217,6 +219,8 @@ ul {
 
 
 
+
+
 /* =============================
 
 Show indivisual photos section
@@ -254,6 +258,9 @@ Show indivisual photos section
 	font-family: 'Special Elite', cursive;
 }
 
+.album-list,.add-in-album-span {
+	font-family: 'Special Elite', cursive;
+}
 
 
 
@@ -298,6 +305,8 @@ Show album section
 	text-decoration: none;
 }
 	
+
+
 
 
 /* =============================
@@ -357,9 +366,11 @@ journal section
 }
 
 
+
+
 /* =============================
 
-edit/delete photo section
+edit/delete section
 
 ================================*/
 .editphoto-title,.editphoto-form,.editphoto-button {
@@ -396,3 +407,4 @@ edit/delete photo section
 	background: #EADECF;
 	padding: 130px;
 }
+

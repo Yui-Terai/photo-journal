@@ -3,19 +3,21 @@ const methodOverride = require('method-override');
 const pg = require('pg');
 const multer = require('multer');
 const PORT = process.env.PORT || 3000;
+const bodyParser = require('body-parser');
 
-// Initialise postgres client
+
+/**
+ * ===================================
+ * Configurations and set up
+ * ===================================
+ */
 const url = require('url');
+if(process.env.DATABASE_URL) {
 
-//check to see if we have this heroku environment variable
-if( process.env.DATABASE_URL ){
-
-  //we need to take apart the url so we can set the appropriate configs
-
+  console.log("in process")
   const params = url.parse(process.env.DATABASE_URL);
   const auth = params.auth.split(':');
 
-  //make the configs object
   var configs = {
     user: auth[0],
     password: auth[1],
@@ -24,40 +26,42 @@ if( process.env.DATABASE_URL ){
     database: params.pathname.split('/')[1],
     ssl: true
   };
-
-}else{
-
-
-const configs = {
+} else {
+  console.log("not in process")
+  var configs = {
   user: 'yuiterai',
   host: '127.0.0.1',
   database: 'photo_journal',
   port: 5432,
 };
-
 }
+
+
 const pool = new pg.Pool(configs);
 
 pool.on('error', function (err) {
   console.log('idle client error', err.message, err.stack);
 });
 
-/**
- * ===================================
- * Configurations and set up
- * ===================================
- */
 
 // Init express app
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+// app.use(express.json());
+// app.use(express.urlencoded({
+//   extended: true
+// }));
 
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
+
+
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Set react-views to be the default view engine
 const reactEngine = require('express-react-views').createEngine();
@@ -291,15 +295,6 @@ let showJournal = (request, response) => {
 }
 
 
-
-/**
- * ===================================
- * DONE DONE DONE DONE DONE DONE DONE
- * ===================================
- */
-
-
-
 //Send a request to show the selcted album to delete
 let deleteAlbumRequest = (request, response) => {
   let albumId = request.params.id;
@@ -330,6 +325,36 @@ let deleteAlbum = (request, response) => {
     }
   });
 }
+
+/**
+ * ===================================
+ * DONE DONE DONE DONE DONE DONE DONE
+ * ===================================
+ */
+
+
+let addInAlbum = (request, response) => {
+  console.log("recieving info",request.body)
+  let albumId=request.body.albumId;
+  let photoId = request.body.photoId;
+
+  //  let photos = request.body.photoArray;
+  let query = "INSERT INTO photos_album (photo_id, album_id) VALUES ($1, $2)";
+  let values = [photoId, albumId];
+  
+   pool.query(query, values, (err, result) => {
+      if(!err) {
+        response.send({message:"success"});
+    } else {
+      console.error('query error:', err.stack);
+      response.status(500).send('QUERY ERROR!!!!! at createAlbum');
+    }
+  });
+}
+
+
+
+
 
 
 
@@ -364,9 +389,9 @@ app.get('/photos/:id/edit', editPhotoRequest);
 app.put('/photos/:id', editPhotoPut);
 app.get('/photos/:id/delete', deletePhotoRequest);
 app.delete('/photos/:id', deletePhoto);
+app.post('/album/addPhoto', addInAlbum);
 
 app.get('/photos/:id', showJournal);
-
 
 app.get('/album/new', newAlbumRequest);
 app.post('/album', createNewAlbum);

@@ -24,6 +24,10 @@ class Journal extends React.Component {
                         </div>
                     </div>
                   </div>
+                  <div className="editphoto-button text-right m-3">
+                  <a href={`/photos/${this.props.journal.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-secondary edit-delete-button mr-1 mt-2" role="button" aria-pressed="true">edit</a>
+                    <a href={`/photos/${this.props.journal.id}/delete`} className="btn btn-primary btn-sm active btn btn-secondary edit-delete-button ml-1 mt-2" role="button" aria-pressed="true">delete</a>
+                </div>
                 </div>
             </Default>
         );

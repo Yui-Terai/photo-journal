@@ -10,9 +10,9 @@ class Albums extends React.Component {
             )      
         });
         return (
-            <div className="mt-2">
-            <span>add in album: </span>
-            <select name="album">
+            <div className="mt-2 ml-2">
+            <span className="add-in-album-span">add in album: </span>
+            <select className="album-list" id={this.props.photoId}>
                 {albumList}
             </select>
             </div>
@@ -32,11 +32,9 @@ class ShowPhotos extends React.Component {
                         <img src={photo.photo}/>
                         </a>
                     </div>
-                    <form action={`/album/new/${this.props.id}`} method="post">
-                        <Albums albumList={this.props.albumList}/>
+                    <form action={`/album/add/${photo.id}`} method="post">
+                        <Albums albumList={this.props.albumList} photoId={photo.id}/>
                     </form>
-                    <a href={`/photos/${photo.id}/edit`} className="btn btn-primary btn-sm active btn btn-outline-secondary edit-delete-button mr-1 mt-2" role="button" aria-pressed="true">edit</a>
-                    <a href={`/photos/${photo.id}/delete`} className="btn btn-primary btn-sm active btn btn-secondary edit-delete-button ml-1 mt-2" role="button" aria-pressed="true">delete</a>
                 </div>
                 )
             });
