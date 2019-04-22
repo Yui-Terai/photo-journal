@@ -5,6 +5,29 @@ const multer = require('multer');
 const PORT = process.env.PORT || 3000;
 
 // Initialise postgres client
+const url = require('url');
+
+//check to see if we have this heroku environment variable
+if( process.env.DATABASE_URL ){
+
+  //we need to take apart the url so we can set the appropriate configs
+
+  const params = url.parse(process.env.DATABASE_URL);
+  const auth = params.auth.split(':');
+
+  //make the configs object
+  var configs = {
+    user: auth[0],
+    password: auth[1],
+    host: params.hostname,
+    port: params.port,
+    database: params.pathname.split('/')[1],
+    ssl: true
+  };
+
+}else{
+
+
 const configs = {
   user: 'yuiterai',
   host: '127.0.0.1',
@@ -12,6 +35,7 @@ const configs = {
   port: 5432,
 };
 
+}
 const pool = new pg.Pool(configs);
 
 pool.on('error', function (err) {
@@ -112,19 +136,6 @@ let showPhotos = (request, response) => {
       }
   });
 } 
-
-
-
-  // query = 'SELECT * FROM photos';
-  // pool.query(query, (err, result) => {
-  //   if (!err) {
-  //       const data = {photos: result.rows};
-  //       response.render('photo/showphotos', data);
-  //     } else {
-  //       console.error('query error:', err);
-  //       response.status(500).send('QUERY ERROR!!!!! at showPhotos');
-  //     }
-  // });
 
 
 //Send request to create a form for a new album
