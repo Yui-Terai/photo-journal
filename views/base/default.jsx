@@ -10,6 +10,7 @@ class Default extends React.Component {
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
           <link rel="stylesheet" type="text/css" href="/style.css"/>
           <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Special+Elite|Fredericka+the+Great|Dawning+of+a+New+Day" rel="stylesheet"></link>
+          <script src="script.js"></script>
         </head>
         <body>
           <nav className="nav nav-default">

@@ -2,7 +2,7 @@ const express = require('express');
 const methodOverride = require('method-override');
 const pg = require('pg');
 const multer = require('multer');
-
+const PORT = process.env.PORT || 3000;
 
 // Initialise postgres client
 const configs = {
@@ -88,19 +88,44 @@ let addNewPhoto = (request, response) => {
   });
 }
 
-//Send request to show all indivisual photos
+
+//Send a request to show all indivisual photos
 let showPhotos = (request, response) => {
-  query = 'SELECT * FROM photos';
-  pool.query(query, (err, result) => {
-    if (!err) {
-        const data = {photos: result.rows};
-        response.render('photo/showphotos', data);
-      } else {
+  albumQuery = 'SELECT * FROM album';
+  pool.query(albumQuery, (err, result) => {
+    if(!err) {
+      let albumTitle = result.rows;
+      let photosQuery = 'SELECT * FROM photos';
+
+      pool.query(photosQuery, (err, result) => {
+        if (!err) {
+            const data = {photos: result.rows, albumList: albumTitle};
+            response.render('photo/showphotos', data);
+          } else {
+            console.error('query error:', err);
+            response.status(500).send('QUERY ERROR!!!!! at showPhotos');
+          }
+      });
+    } else {
         console.error('query error:', err);
         response.status(500).send('QUERY ERROR!!!!! at showPhotos');
       }
   });
-}
+} 
+
+
+
+  // query = 'SELECT * FROM photos';
+  // pool.query(query, (err, result) => {
+  //   if (!err) {
+  //       const data = {photos: result.rows};
+  //       response.render('photo/showphotos', data);
+  //     } else {
+  //       console.error('query error:', err);
+  //       response.status(500).send('QUERY ERROR!!!!! at showPhotos');
+  //     }
+  // });
+
 
 //Send request to create a form for a new album
 let newAlbumRequest = (request, response) => {
@@ -347,8 +372,7 @@ app.delete('/album/:id', deleteAlbum);
  * Listen to requests on port 3000
  * ===================================
  */
-
-const server = app.listen(3000, () => console.log('~~~ Tuning in to the waves of port 3000 ~~~'));
+const server = app.listen(PORT, () => console.log('~~~ Tuning in to the waves of port '+PORT+' ~~~'));
 
 let onClose = function(){
 
