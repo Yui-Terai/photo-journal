@@ -14,7 +14,7 @@ let responseHandler = e => {
   }).then(res => {
     res.json().then(val => {
       console.log(val.message);
-      // val.message == "success" ? alert("we did it!") : alert("err!");
+      //val.message == "success" ? alert("we did it!") : alert("err!");
     });
   });
 };
@@ -34,3 +34,4 @@ window.onload = () => {
     console.log("err in script.js: window.onload");
   }
 };
+
