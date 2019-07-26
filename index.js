@@ -2,7 +2,7 @@ const express = require('express');
 const methodOverride = require('method-override');
 const pg = require('pg');
 const multer = require('multer');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4001;
 const bodyParser = require('body-parser');
 
 
